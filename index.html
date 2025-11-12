@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Les Relations Binaires - BUT Informatique</title>
+    <!-- Chargement de TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chargement de KaTeX pour le rendu LaTeX (CORRECTION: xintegrity -> integrity) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" xintegrity="sha384-KiWOvVjnN8qwKMkhsISfnhAEiUAClsm8RseYkCCvicYGLYSCUTDEDUaSMfA/Ph6E" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" xintegrity="sha384-hIoBPJpTUs74ddyc4bGnC6TMcvUcJgS+dWGcPbGqwMxSgKxNCoMhwYaCgB/VBs8" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" xintegrity="sha384-43gviWU0YVjaD4h/sLRYG3I4+O1rTARsTMIhGstBJv2mwM_r1rZJqQjSHkjAhrB" crossorigin="anonymous"></script>
+    <style>
+        /* Configuration de la police Inter */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        html {
+            scroll-behavior: smooth; /* Active le défilement fluide pour les ancres */
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Style pour les sections de contenu */
+        section {
+            @apply bg-slate-800 shadow-lg rounded-2xl p-6 lg:p-10 mb-12;
+        }
+        h2 {
+            @apply text-3xl font-bold text-blue-500 mb-6 pb-3 border-b border-slate-700;
+        }
+        h3 {
+            @apply text-2xl font-semibold text-slate-100 mt-8 mb-4;
+        }
+        code {
+            @apply bg-slate-700 text-blue-300 rounded-md px-2 py-1 text-sm font-mono;
+        }
+        li {
+            @apply mb-2;
+        }
+        /* Style pour le menu latéral */
+        nav a {
+            @apply block text-lg p-3 rounded-lg font-medium text-slate-300 hover:bg-slate-700 hover:text-white transition-colors duration-200;
+        }
+        nav a.active {
+            @apply bg-blue-600 text-white font-semibold;
+        }
+        
+        /* Style pour les checkbox des quiz */
+        .quiz-inputs .form-checkbox {
+            @apply h-5 w-5 rounded text-blue-600 focus:ring-blue-500 bg-slate-600 border-slate-500;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 leading-relaxed text-slate-300">
+
+    <div class="lg:flex">
+        <!-- Menu latéral (Sidebar) -->
+        <nav class="lg:w-72 lg:h-screen lg:sticky lg:top-0 bg-slate-800 border-r border-slate-700 p-6">
+            <h1 class="text-2xl font-bold text-blue-500 mb-8 border-b border-slate-700 pb-4">Relations Binaires</h1>
+            <ul class="space-y-2">
+                <li><a href="#definition" class="active">Définition</a></li>
+                <li><a href="#representations">Représentations</a></li>
+                <li><a href="#proprietes">Propriétés</a></li>
+                <li><a href="#exercices">Exercices (STAR)</a></li>
+                <li><a href="#equivalence">Relations d'Équivalence</a></li>
+                <li><a href="#ordre">Relations d'Ordre</a></li>
+                <li><a href="#fermetures">Fermetures</a></li>
+                <li><a href="#outil">Outil d'Analyse</a></li>
+            </ul>
+        </nav>
+
+        <!-- Contenu principal -->
+        <main class="flex-1 p-8 lg:p-12 overflow-y-auto">
+
+            <!-- Section 1: Définition -->
+            <section id="definition">
+                <h2>Qu'est-ce qu'une relation binaire ?</h2>
+                <p class="text-lg mb-4">
+                    Formellement, une relation binaire $\mathcal{R}$ d'un ensemble de départ $A$ vers un ensemble d'arrivée $B$ est un sous-ensemble du produit cartésien $A \times B$.
+                </p>
+                $$ \mathcal{R} \subseteq A \times B $$
+                <p class="text-lg mb-4">
+                    Si $(a, b) \in \mathcal{R}$, on dit que $a$ est en relation avec $b$, et on note souvent $a \mathcal{R} b$.
+                </p>
+                <p class="text-lg mb-4">
+                    Le plus souvent en informatique, on étudie les <strong>relations sur un seul ensemble</strong>, où $A = B$. Dans ce cas, $\mathcal{R} \subseteq A \times A$.
+                </p>
+                
+                <h3>Exemple</h3>
+                <p class="mb-2">Soit l'ensemble $A = \{1, 2, 3, 4\}$.</p>
+                <p class="mb-2">Considérons la relation $\mathcal{R}$ "est un diviseur de".</p>
+                <p>En extension (l'ensemble des paires), la relation est :</p>
+                <p>$\mathcal{R} = \{ (1, 1), (1, 2), (1, 3), (1, 4), (2, 2), (2, 4), (3, 3), (4, 4) \}$</p>
+            </section>
+
+            <!-- Section 2: Représentations -->
+            <section id="representations">
+                <h2>Comment représenter une relation ?</h2>
+                <p>Une relation $\mathcal{R}$ sur un ensemble $A$ peut être représentée de plusieurs façons :</p>
+
+                <h3 class="mt-6">1. Par un ensemble de paires (Graphe extensionnel)</h3>
+                <p>C'est la définition formelle. On liste tous les couples $(a, b)$ qui appartiennent à la relation.</p>
+                <p>Exemple : $\mathcal{R} = \{ (a, a), (a, c), (b, c) \}$ sur $A = \{a, b, c\}$.</p>
+
+                <h3 class="mt-6">2. Par une matrice d'adjacence</h3>
+                <p>Si $A = \{a_1, a_2, \dots, a_n\}$, on crée une matrice $M$ de taille $n \times n$ où :</p>
+                $$ M_{i,j} = \begin{cases} 1 & \text{si } (a_i, a_j) \in \mathcal{R} \\ 0 & \text{sinon} \end{cases} $$
+                <p>Exemple pour $\mathcal{R} = \{ (a, a), (a, c), (b, c) \}$ :</p>
+                <pre class="bg-slate-700 p-4 rounded-lg font-mono text-sm border border-slate-600 text-slate-300">
+      a  b  c
+   a [1, 0, 1]
+   b [0, 0, 1]
+   c [0, 0, 0]
+                </pre>
+
+                <h3 class="mt-6">3. Par un graphe orienté</h3>
+                <p>Chaque élément de $A$ est un <strong>nœud</strong> (sommet) du graphe.
+                Une paire $(a, b) \in \mathcal{R}$ est représentée par une <strong>arête orientée</strong> (une flèche) allant de $a$ vers $b$.</p>
+                
+                <p class="mt-2 p-4 bg-slate-700 rounded-lg border border-slate-600">
+                    <strong>Exemple :</strong> Pour $\mathcal{R} = \{ (a, a), (a, c), (b, c) \}$, le graphe aurait :
+                    <ul class="list-disc list-inside ml-4 mt-2">
+                        <li>Trois nœuds : $a$, $b$, $c$.</li>
+                        <li>Une boucle sur $a$ (car $(a, a) \in \mathcal{R}$).</li>
+                        <li>Une flèche de $a$ vers $c$ (car $(a, c) \in \mathcal{R}$).</li>
+                        <li>Une flèche de $b$ vers $c$ (car $(b, c) \in \mathcal{R}$).</li>
+                    </ul>
+                </p>
+            </section>
+
+            <!-- Section 3: Propriétés -->
+            <section id="proprietes">
+                <h2>Propriétés fondamentales</h2>
+                <p class="mb-6">L'analyse des relations consiste souvent à vérifier si elles possèdent certaines propriétés. Soit $\mathcal{R}$ une relation sur un ensemble $A$.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Réflexivité -->
+                    <div class="bg-slate-700 border border-slate-600 p-5 rounded-lg shadow-sm">
+                        <h4 class="text-xl font-semibold text-blue-400 mb-2">Réflexive</h4>
+                        <p>$\mathcal{R}$ est réflexive si chaque élément est en relation avec lui-même.</p>
+                        <p class="font-mono text-blue-300 my-3">$\forall a \in A, (a, a) \in \mathcal{R}$</p>
+                        <ul class="text-sm list-disc list-inside">
+                            <li><strong>Graphe :</strong> Chaque nœud a une boucle.</li>
+                            <li><strong>Matrice :</strong> La diagonale ne contient que des 1.</li>
+                        </ul>
+                    </div>
+                    <!-- Irréflexivité -->
+                    <div class="bg-slate-700 border border-slate-600 p-5 rounded-lg shadow-sm">
+                        <h4 class="text-xl font-semibold text-blue-400 mb-2">Irréflexive</h4>
+                        <p>$\mathcal{R}$ est irréflexive si aucun élément n'est en relation avec lui-même.</p>
+                        <p class="font-mono text-blue-300 my-3">$\forall a \in A, (a, a) \notin \mathcal{R}$</p>
+                        <ul class="text-sm list-disc list-inside">
+                            <li><strong>Graphe :</strong> Aucun nœud n'a de boucle.</li>
+                            <li><strong>Matrice :</strong> La diagonale ne contient que des 0.</li>
+                        </ul>
+                    </div>
+                    <!-- Symétrie -->
+                    <div class="bg-slate-700 border border-slate-600 p-5 rounded-lg shadow-sm">
+                        <h4 class="text-xl font-semibold text-blue-400 mb-2">Symétrique</h4>
+                        <p>Si $a$ est en relation avec $b$, alors $b$ doit être en relation avec $a$.</p>
+                        <p class="font-mono text-blue-300 my-3">$\forall a, b \in A, (a, b) \in \mathcal{R} \implies (b, a) \in \mathcal{R}$</p>
+                        <ul class="text-sm list-disc list-inside">
+                            <li><strong>Graphe :</strong> Toute arête est bi-directionnelle (une flèche dans les deux sens).</li>
+                            <li><strong>Matrice :</strong> La matrice est égale à sa transposée ($M = M^T$).</li>
+                        </ul>
+                    </div>
+                    <!-- Asymétrique -->
+                    <div class="bg-slate-700 border border-slate-600 p-5 rounded-lg shadow-sm">
+                        <h4 class="text-xl font-semibold text-blue-400 mb-2">Asymétrique</h4>
+                        <p>Si $a$ est en relation avec $b$, alors $b$ ne peut pas être en relation avec $a$.</p>
+                        <p class="font-mono text-blue-300 my-3">$\forall a, b \in A, (a, b) \in \mathcal{R} \implies (b, a) \notin \mathcal{R}$</p>
+                        <p class="text-sm text-slate-400">(Note : une relation asymétrique est forcément irréflexive).</p>
+                    </div>
+                    <!-- Antisymétrie -->
+                    <div class="bg-slate-700 border border-slate-600 p-5 rounded-lg shadow-sm">
+                        <h4 class="text-xl font-semibold text-blue-400 mb-2">Antisymétrique</h4>
+                        <p>Si $a$ est en relation avec $b$ et $b$ avec $a$, c'est que $a$ et $b$ sont le même élément.</p>
+                        <p class="font-mono text-blue-300 my-3">$\forall a, b \in A, [(a, b) \in \mathcal{R} \land (b, a) \in \mathcal{R}] \implies a = b$</p>
+                        <ul class="text-sm list-disc list-inside">
+                            <li><strong>Graphe :</strong> Il n'y a pas de "cycles" de longueur 2 (pas de flèches dans les deux sens entre deux nœuds distincts).</li>
+                            <li><strong>Matrice :</strong> Si $i \ne j$, on ne peut pas avoir $M_{i,j} = 1$ et $M_{j,i} = 1$ en même temps.</li>
+                        </ul>
+                    </div>
+                    <!-- Transitivité -->
+                    <div class="bg-slate-700 border border-slate-600 p-5 rounded-lg shadow-sm">
+                        <h4 class="text-xl font-semibold text-blue-400 mb-2">Transitive</h4>
+                        <p>Si $a$ est en relation avec $b$, et $b$ avec $c$, alors $a$ doit être en relation avec $c$.</p>
+                        <p class="font-mono text-blue-300 my-3">$\forall a, b, c \in A, [(a, b) \in \mathcal{R} \land (b, c) \in \mathcal{R}] \implies (a, c) \in \mathcal{R}$</p>
+                        <ul class="text-sm list-disc list-inside">
+                             <li><strong>Graphe :</strong> S'il existe un chemin $a \to b \to c$, il doit exister une arête "raccourci" $a \to c$.</li>
+                             <li><strong>Matrice :</strong> Si $M^2$ est la multiplication booléenne de $M$ par $M$, alors $M^2_{i,j}=1 \implies M_{i,j}=1$.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3.5: Exercices -->
+            <section id="exercices">
+                <h2>Exercices Interactifs (STAR)</h2>
+                <p class="text-lg mb-6">Testez vos connaissances sur les propriétés de Réflexivité, Symétrie, Transitivité et Antisymétrie.</p>
+
+                <!-- Exercice 1 : Générateur par Paires -->
+                <h3>Générateur d'Exercices (Paires)</h3>
+                <p class="mb-4">Cliquez sur "Générer" pour créer une relation aléatoire sur $A = \{1, 2, 3\}$. Analysez-la, puis vérifiez votre réponse.</p>
+                
+                <div class="p-5 bg-slate-700 border border-slate-600 rounded-lg">
+                    <button id="generateButton" class="px-6 py-3 bg-blue-700 text-white font-semibold rounded-lg shadow-md hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors mb-4">
+                        Générer (Paires)
+                    </button>
+                    <div id="generatedRelationDisplay" class="font-mono text-lg mb-4 p-4 bg-slate-800 border border-slate-600 rounded-md min-h-[50px]">
+                        $\mathcal{R} = \{\}$
+                    </div>
+                    
+                    <h4 class="text-lg font-semibold mb-3">Vos réponses :</h4>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4 quiz-inputs" id="generatorQuizInputs">
+                        <label class="flex items-center space-x-2"><input type="checkbox" data-prop="r" class="form-checkbox"><span>Réflexive</span></label>
+                        <label class="flex items-center space-x-2"><input type="checkbox" data-prop="s" class="form-checkbox"><span>Symétrique</span></label>
+                        <label class="flex items-center space-x-2"><input type="checkbox" data-prop="a" class="form-checkbox"><span>Antisymétrique</span></label>
+                        <label class="flex items-center space-x-2"><input type="checkbox" data-prop="t" class="form-checkbox"><span>Transitive</span></label>
+                    </div>
+                    
+                    <button id="checkGeneratedButton" class="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700">Vérifier</button>
+                    
+                    <div id="generatorSolution" class="hidden mt-4 p-4 border-l-4">
+                        <!-- Le feedback s'affichera ici -->
+                    </div>
+                </div>
+
+                <!-- NOUVEAU: Exercice 2 : Générateur par Matrice -->
+                <h3 class="mt-10">Générateur d'Exercices (Matrices)</h3>
+                <p class="mb-4">Générez une matrice d'adjacence pour une relation sur $E = \{1, 2, 3\}$. Analysez ses propriétés (diagonale, symétrie $M = M^T$, etc.) et vérifiez.</p>
+                
+                <div class="p-5 bg-slate-700 border border-slate-600 rounded-lg">
+                    <button id="generateMatrixButton" class="px-6 py-3 bg-blue-700 text-white font-semibold rounded-lg shadow-md hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors mb-4">
+                        Générer (Matrice)
+                    </button>
+                    <div id="matrixDisplay" class="mb-4 p-4 bg-slate-800 border border-slate-600 rounded-md min-h-[50px]">
+                        <pre class="font-mono text-lg text-slate-300"></pre>
+                    </div>
+                    
+                    <h4 class="text-lg font-semibold mb-3">Vos réponses :</h4>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4 quiz-inputs" id="matrixQuizInputs">
+                        <label class="flex items-center space-x-2"><input type="checkbox" data-prop="r" class="form-checkbox"><span>Réflexive</span></label>
+                        <label class="flex items-center space-x-2"><input type="checkbox" data-prop="s" class="form-checkbox"><span>Symétrique</span></label>
+                        <label class="flex items-center space-x-2"><input type="checkbox" data-prop="a" class="form-checkbox"><span>Antisymétrique</span></label>
+                        <label class="flex items-center space-x-2"><input type="checkbox" data-prop="t" class="form-checkbox"><span>Transitive</span></label>
+                    </div>
+                    
+                    <button id="checkMatrixButton" class="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700">Vérifier</button>
+                    
+                    <div id="matrixSolution" class="hidden mt-4 p-4 border-l-4">
+                        <!-- Le feedback de la matrice s'affichera ici -->
+                    </div>
+                </div>
+
+
+                <!-- Exercice 3 -->
+                <h3 class="mt-10">Exercice 3 : Relation sur $\mathcal{P}(E)$ (Ensemble des parties)</h3>
+                <p class="mb-4">Soit $E = \{a, b, c\}$. On définit la relation $\subseteq$ (inclusion) sur $\mathcal{P}(E)$ (l'ensemble de tous les sous-ensembles de $E$). Analysez ses propriétés. (Ceci est un exercice de réflexion, pas un quiz).</p>
+                <div class="p-5 bg-slate-700 border border-slate-600 rounded-lg">
+                    <p class="text-lg mb-3">$A \mathcal{R} B \iff A \subseteq B$</p>
+                    <ul class="list-disc list-inside">
+                        <li><strong>Réflexive :</strong> Oui, tout ensemble $A$ est inclus dans lui-même ($A \subseteq A$).</li>
+                        <li><strong>Symétrique :</strong> Non, $\{a\} \subseteq \{a, b\}$ mais $\{a, b\} \not\subseteq \{a\}$.</li>
+                        <li><strong>Antisymétrique :</strong> Oui, si $A \subseteq B$ et $B \subseteq A$, alors par définition $A = B$.</li>
+                        <li><strong>Transitive :</strong> Oui, si $A \subseteq B$ et $B \subseteq C$, alors tout élément de $A$ est dans $B$, et tout élément de $B$ est dans $C$, donc tout élément de $A$ est dans $C$ ($A \subseteq C$).</li>
+                        <li><strong>Conclusion :</strong> C'est une relation d'ordre (partiel).</li>
+                    </ul>
+                </div>
+
+                <!-- Exercice 4 -->
+                <h3 class="mt-10">Exercice 4 : Le piège classique</h3>
+                <p class="mb-4">Soit une relation $\mathcal{R}$ sur un ensemble $A$. Prouver ou réfuter l'affirmation suivante :</p>
+                <p class="italic p-4 bg-slate-700 rounded-lg border border-slate-600">"Si $\mathcal{R}$ est symétrique et transitive, alors $\mathcal{R}$ est aussi réflexive."</p>
+                <div class="p-5 bg-slate-700 border border-slate-600 rounded-lg shadow-sm mt-4">
+                    <p><strong>Réfutation (Faux).</strong></p>
+                    <p>C'est un piège courant. La définition de la réflexivité est $\forall a \in A, (a, a) \in \mathcal{R}$.</p>
+                    <p>Si $\mathcal{R}$ est symétrique et transitive, on peut seulement prouver que *si un élément $a$ est en relation avec au moins un $b$*, alors $a \mathcal{R} a$.
+                    Preuve : Supposons $a \mathcal{R} b$. Par symétrie, $b \mathcal{R} a$. Par transitivité (en utilisant $a \mathcal{R} b$ et $b \mathcal{R} a$), on a $a \mathcal{R} a$.</p>
+                    <p class="mt-2"><strong>Contre-exemple :</strong> Soit $A = \{1, 2, 3\}$ et $\mathcal{R} = \{(1, 1), (2, 2)\}$.</p>
+                     <ul class="list-disc list-inside ml-4 mt-2">
+                        <li><strong>Symétrique :</strong> Oui (trivialement).</li>
+                        <li><strong>Transitive :</strong> Oui (trivialement).</li>
+                        <li><strong>Réflexive :</strong> Non, car l'élément $3 \in A$ n'est pas en relation avec lui-même ($(3, 3) \notin \mathcal{R}$).</li>
+                    </ul>
+                </div>
+
+            </section>
+
+            <!-- Section 4: Relations d'Équivalence -->
+            <section id="equivalence">
+                <h2>Relations d'Équivalence</h2>
+                <p class="text-lg mb-4">Une relation d'équivalence est une relation qui "regroupe" des éléments considérés comme similaires. C'est un concept fondamental en informatique et en mathématiques (ex: égalité, congruence).</p>
+                <p class="mb-4">Une relation $\mathcal{R}$ sur $A$ est une <strong>relation d'équivalence</strong> si elle est à la fois :</p>
+                <ol class="list-decimal list-inside text-xl ml-4 space-y-2 mb-6">
+                    <li><strong>Réflexive</strong></li>
+                    <li><strong>Symétrique</strong></li>
+                    <li><strong>Transitive</strong></li>
+                </ol>
+
+                <h3>Classe d'équivalence</h3>
+                <p>Si $\mathcal{R}$ est une relation d'équivalence, la <strong>classe d'équivalence</strong> d'un élément $a \in A$, notée $[a]$, est l'ensemble de tous les éléments en relation avec $a$.</p>
+                $$ [a] = \{ x \in A \mid x \mathcal{R} a \} $$
+                <p class="mt-2">Propriété clé : $x \mathcal{R} y \iff [x] = [y]$.</p>
+
+                <h3>Ensemble Quotient</h3>
+                <p>L'ensemble de <em>toutes</em> les classes d'équivalence est appelé l'<strong>ensemble quotient</strong>, noté $A / \mathcal{R}$.</p>
+                <p class="mt-2">Les classes d'équivalence forment une <strong>partition</strong> de l'ensemble $A$ :
+                    <ul class="list-disc list-inside ml-4 mt-2">
+                        <li>Elles sont non-vides.</li>
+                        <li>Leur union recouvre tout $A$.</li>
+                        <li>Deux classes distinctes sont disjointes (elles n'ont aucun élément en commun).</li>
+                    </ul>
+                </p>
+
+                <h3>Exemple : Congruence Modulo n</h3>
+                <p>Sur l'ensemble $\mathbb{Z}$ des entiers, la relation "est congru à modulo 3" est définie par :
+                $a \mathcal{R} b \iff a \equiv b \pmod{3} \iff (a-b) \text{ est divisible par 3.}$</p>
+                <p>C'est une relation d'équivalence. Les classes d'équivalence (l'ensemble quotient $\mathbb{Z} / 3\mathbb{Z}$) sont :</p>
+                <ul class="list-disc list-inside ml-4 mt-2">
+                    <li>$[0] = \{ \dots, -6, -3, 0, 3, 6, \dots \}$ (les multiples de 3)</li>
+                    <li>$[1] = \{ \dots, -5, -2, 1, 4, 7, \dots \}$ (les nombres de la forme $3k+1$)</li>
+                    <li>$[2] = \{ \dots, -4, -1, 2, 5, 8, \dots \}$ (les nombres de la forme $3k+2$)</li>
+                </ul>
+            </section>
+
+            <!-- Section 5: Relations d'Ordre -->
+            <section id="ordre">
+                <h2>Relations d'Ordre</h2>
+                <p class="text-lg mb-4">Une relation d'ordre sert à "trier" ou "comparer" des éléments. (ex: $\le$ sur les entiers, $\subseteq$ sur les ensembles).</p>
+                <p class="mb-4">Une relation $\mathcal{R}$ sur $A$ est une <strong>relation d'ordre</strong> si elle est à la fois :</p>
+                <ol class="list-decimal list-inside text-xl ml-4 space-y-2 mb-6">
+                    <li><strong>Réflexive</strong></li>
+                    <li><strong>Antisymétrique</strong></li>
+                    <li><strong>Transitive</strong></li>
+                </ol>
+                <p>Un ensemble muni d'une relation d'ordre $(A, \mathcal{R})$ est appelé un <strong>ensemble ordonné</strong>.</p>
+
+                <h3>Ordre Partiel vs Ordre Total</h3>
+                <p class="mb-4">Une relation d'ordre est dite <strong>totale</strong> si <em>tous</em> les éléments peuvent être comparés entre eux. Sinon, elle est <strong>partielle</strong>.</p>
+                <p class="font-mono text-blue-300 my-3">Ordre Total : $\forall a, b \in A, (a \mathcal{R} b) \lor (b \mathcal{R} a)$</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                    <div class="bg-slate-700 border border-slate-600 p-5 rounded-lg">
+                        <h4 class="text-xl font-semibold text-slate-100 mb-2">Exemple d'Ordre Total</h4>
+                        <p>La relation $\le$ (inférieur ou égal) sur l'ensemble $\mathbb{N} = \{0, 1, 2, \dots\}$.</p>
+                        <ul class="list-disc list-inside ml-4 mt-2 text-sm">
+                            <li>Réflexive : $a \le a$ (vrai).</li>
+                            <li>Antisymétrique : $a \le b$ et $b \le a \implies a=b$ (vrai).</li>
+                            <li>Transitive : $a \le b$ et $b \le c \implies a \le c$ (vrai).</li>
+                            <li>Totale : $\forall a, b \in \mathbb{N}$, on a soit $a \le b$, soit $b \le a$ (vrai).</li>
+                        </ul>
+                    </div>
+                    <div class="bg-slate-700 border border-slate-600 p-5 rounded-lg">
+                        <h4 class="text-xl font-semibold text-slate-100 mb-2">Exemple d'Ordre Partiel</h4>
+                        <p>La relation de divisibilité $|$ sur $\mathbb{N}^* = \{1, 2, 3, \dots\}$.</p>
+                        <ul class="list-disc list-inside ml-4 mt-2 text-sm">
+                            <li>Réflexive : $a | a$ (vrai).</li>
+                            <li>Antisymétrique : $a | b$ et $b | a \implies a=b$ (vrai).</li>
+                            <li>Transitive : $a | b$ et $b | c \implies a | c$ (vrai).</li>
+                            <li><strong>Pas totale :</strong> $3$ et $5$ ne sont pas comparables. On n'a ni $3 | 5$, ni $5 | 3$.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 6: Fermetures -->
+            <section id="fermetures">
+                <h2>Fermetures de Relations</h2>
+                <p class="text-lg mb-4">La <strong>fermeture</strong> d'une relation $\mathcal{R}$ par rapport à une propriété $P$ (ex: réflexivité, transitivité) est la plus petite relation $\mathcal{R}'$ qui contient $\mathcal{R}$ et qui possède la propriété $P$.</p>
+                <p>C'est une notion essentielle pour les bases de données ou la théorie des graphes (ex: trouver tous les chemins possibles).</p>
+
+                <h3 class="mt-6">Fermeture Réflexive $r(\mathcal{R})$</h3>
+                <p>On ajoute simplement toutes les boucles manquantes.</p>
+                <p>Soit $\Delta_A = \{(a, a) \mid a \in A\}$ (la relation identité).</p>
+                $$ r(\mathcal{R}) = \mathcal{R} \cup \Delta_A $$
+
+                <h3 class="mt-6">Fermeture Symétrique $s(\mathcal{R})$</h3>
+                <p>On ajoute l'arête "retour" pour chaque arête existante.</p>
+                <p>Soit $\mathcal{R}^{-1} = \{(b, a) \mid (a, b) \in \mathcal{R}\}$ (la relation inverse).</p>
+                $$ s(\mathcal{R}) = \mathcal{R} \cup \mathcal{R}^{-1} $$
+
+                <h3 class="mt-6">Fermeture Transitive $t(\mathcal{R})$</h3>
+                <p>C'est la plus complexe. On ajoute tous les "raccourcis" possibles. Si on peut aller de $a$ à $c$ en plusieurs étapes ($a \to b_1 \to \dots \to b_k \to c$), on ajoute l'arête directe $(a, c)$.</p>
+                <p>On la note $\mathcal{R}^*$ ou $\mathcal{R}^+$. $\mathcal{R}^+ = \mathcal{R} \cup \mathcal{R}^2 \cup \mathcal{R}^3 \cup \dots$</p>
+                <p class="mt-2">En informatique, on calcule $t(\mathcal{R})$ en utilisant l'<strong>algorithme de Warshall</strong> (basé sur la multiplication de matrices booléennes) pour trouver la "fermeture transitive" ou "accessibilité" dans un graphe.</p>
+            </section>
+            
+            <!-- Section 7: Outil Interactif -->
+            <section id="outil">
+                <h2>Outil d'Analyse</h2>
+                <p class="mb-4">Testez vous-même ! Entrez une relation sur l'ensemble $A = \{1, 2, 3\}$.</p>
+                <p class="mb-4">Séparez les paires par un point-virgule (;) et les éléments d'une paire par une virgule (,).</p>
+                
+                <div class="mb-4">
+                    <label for="relationInput" class="block text-sm font-medium text-slate-300 mb-1">Ensemble $A = \{1, 2, 3\}$</label>
+                    <label for="relationInput" class="block text-sm font-medium text-slate-300 mb-1">Entrez les paires de $\mathcal{R}$ :</label>
+                    <textarea id="relationInput" rows="4" class="w-full p-3 bg-slate-700 border border-slate-600 text-slate-100 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 font-mono" placeholder="Ex: 1,1; 1,2; 2,3; 1,3"></textarea>
+                </div>
+                
+                <button id="analyzeButton" class="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors">
+                    Analyser la relation
+                </button>
+                
+                <div id="results" class="mt-8 space-y-3">
+                    <!-- Les résultats de l'analyse s'afficheront ici -->
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        // --- Script pour l'outil interactif (section #outil) ---
+        
+        document.getElementById('analyzeButton').addEventListener('click', analyzeRelation);
+
+        function analyzeRelation() {
+            const input = document.getElementById('relationInput').value;
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '';
+            
+            const A = [1, 2, 3];
+            const R = new Set();
+            const pairs = input.split(';').filter(p => p.trim() !== '');
+            
+            try {
+                pairs.forEach(pairStr => {
+                    const parts = pairStr.split(',').map(s => s.trim());
+                    if (parts.length !== 2) throw new Error(`Paire mal formée : "${pairStr}"`);
+                    const a = parseInt(parts[0]);
+                    const b = parseInt(parts[1]);
+                    if (isNaN(a) || isNaN(b) || !A.includes(a) || !A.includes(b)) {
+                        throw new Error(`Élément non valide : "${pairStr}". N'utilisez que {1, 2, 3}.`);
+                    }
+                    R.add(`${a},${b}`); // Stocke les paires comme des chaînes "a,b"
+                });
+
+                // Lancement des vérifications
+                const isReflexive = checkReflexive(A, R);
+                const isIrreflexive = checkIrreflexive(A, R);
+                const isSymmetric = checkSymmetric(A, R);
+                const isAsymmetric = checkAsymmetric(A, R);
+                const isAntisymmetric = checkAntisymmetric(A, R);
+                const isTransitive = checkTransitive(A, R);
+
+                // Affichage des résultats
+                displayResult('Réflexive', isReflexive);
+                displayResult('Irréflexive', isIrreflexive);
+                displayResult('Symétrique', isSymmetric);
+                displayResult('Asymétrique', isAsymmetric);
+                displayResult('Antisymétrique', isAntisymmetric);
+                displayResult('Transitive', isTransitive);
+                
+                // Analyse des types de relation
+                resultsDiv.innerHTML += '<h3 class="text-xl font-semibold text-slate-100 mt-6 mb-2">Type de Relation</h3>';
+                if (isReflexive && isSymmetric && isTransitive) {
+                    displayTypeResult("C'est une <strong>relation d'équivalence</strong>.", 'green');
+                } else if (isReflexive && isAntisymmetric && isTransitive) {
+                    const isTotal = checkTotal(A, R);
+                    if (isTotal) {
+                        displayTypeResult("C'est une <strong>relation d'ordre total</strong>.", 'green');
+                    } else {
+                        displayTypeResult("C'est une <strong>relation d'ordre partiel</strong>.", 'green');
+                    }
+                } else {
+                    displayTypeResult("Ce n'est ni une relation d'équivalence ni une relation d'ordre standard.", 'gray');
+                }
+
+            } catch (e) {
+                resultsDiv.innerHTML = `<div class="p-4 rounded-md bg-red-900/30 text-red-300 font-medium border border-red-700">${e.message}</div>`;
+            }
+        }
+
+        function displayResult(propertyName, isTrue) {
+            const resultsDiv = document.getElementById('results');
+            const color = isTrue ? 'green' : 'red';
+            const icon = isTrue ? '✓' : '✗';
+            const [bgColor, textColor, borderColor] = isTrue
+                ? ['bg-green-900/30', 'text-green-300', 'border-green-700']
+                : ['bg-red-900/30', 'text-red-300', 'border-red-700'];
+            
+            resultsDiv.innerHTML += `
+                <div class="p-4 rounded-md ${bgColor} ${textColor} ${borderColor} border flex items-center">
+                    <span class="font-bold text-lg mr-3">${icon}</span>
+                    <span class="font-medium">${propertyName} : <strong>${isTrue ? 'Vraie' : 'Fausse'}</strong></span>
+                </div>
+            `;
+        }
+
+        function displayTypeResult(message, color) {
+             const resultsDiv = document.getElementById('results');
+             let colorClasses = 'bg-slate-700 text-slate-100'; // Cas 'gray'
+             if (color === 'green') {
+                 colorClasses = 'bg-green-900/30 text-green-300';
+             }
+             resultsDiv.innerHTML += `<div class="p-4 rounded-md ${colorClasses}">${message}</div>`;
+        }
+
+        // --- Fonctions de vérification des propriétés ---
+
+        function has(R, a, b) {
+            return R.has(`${a},${b}`);
+        }
+
+        function checkReflexive(A, R) {
+            for (const a of A) {
+                if (!has(R, a, a)) return false;
+            }
+            return true;
+        }
+        
+        function checkIrreflexive(A, R) {
+            for (const a of A) {
+                if (has(R, a, a)) return false;
+            }
+            return true;
+        }
+
+        function checkSymmetric(A, R) {
+            for (const a of A) {
+                for (const b of A) {
+                    if (has(R, a, b) && !has(R, b, a)) return false;
+                }
+            }
+            return true;
+        }
+        
+        function checkAsymmetric(A, R) {
+            for (const a of A) {
+                for (const b of A) {
+                    if (has(R, a, b) && has(R, b, a)) return false;
+                }
+            }
+            return true;
+        }
+
+        function checkAntisymmetric(A, R) {
+            for (const a of A) {
+                for (const b of A) {
+                    if (a !== b && has(R, a, b) && has(R, b, a)) return false;
+                }
+            }
+            return true;
+        }
+
+        function checkTransitive(A, R) {
+            for (const a of A) {
+                for (const b of A) {
+                    for (const c of A) {
+                        if (has(R, a, b) && has(R, b, c) && !has(R, a, c)) return false;
+                    }
+                }
+            }
+            return true;
+        }
+        
+        function checkTotal(A, R) {
+            // Note: suppose que c'est déjà un ordre (réflexif, antisym, trans)
+             for (const a of A) {
+                for (const b of A) {
+                    if (!has(R, a, b) && !has(R, b, a)) return false; // Non comparables
+                }
+            }
+            return true;
+        }
+
+        // --- Scripts de la page (KaTeX, Navigation, Exercices) ---
+        document.addEventListener("DOMContentLoaded", function() {
+            
+            // --- 1. Rendu des Maths (KaTeX) ---
+            // S'assure que KaTeX est chargé avant d'essayer de l'utiliser
+            // (les scripts ont 'defer' donc ils s'exécutent après le parsing du DOM)
+            try {
+                if (window.renderMathInElement) {
+                    renderMathInElement(document.body, {
+                        delimiters: [
+                            {left: "$$", right: "$$", display: true},  // Pour les maths en mode "display"
+                            {left: "$", right: "$", display: false}    // Pour les maths en mode "inline"
+                        ]
+                    });
+                }
+            } catch (e) {
+                console.error("Erreur lors du rendu KaTeX:", e);
+            }
+            
+
+            // --- 2. Navigation fluide et état "actif" au CLIC ---
+            const navLinks = document.querySelectorAll('nav a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault(); // Empêche le saut brutal de l'ancre
+                    const targetId = link.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        // Défilement fluide
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                        // Met à jour le hash dans l'URL sans sauter
+                        history.pushState(null, null, targetId);
+
+                        // Met à jour l'état "actif" immédiatement
+                        navLinks.forEach(l => l.classList.remove('active'));
+                        link.classList.add('active');
+                    }
+                });
+            });
+
+            // --- 3. État "actif" au SCROLL ---
+            // Met à jour le lien actif pendant le défilement manuel
+            const sections = document.querySelectorAll('section');
+            window.addEventListener('scroll', () => {
+                let currentSection = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 100) { // 100px offset
+                        currentSection = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${currentSection}`) {
+                        link.classList.add('active');
+                    }
+                });
+                
+                // Cas spécial pour le haut de la page
+                if (pageYOffset < 150 && navLinks.length > 0) {
+                     navLinks.forEach(link => link.classList.remove('active'));
+                     navLinks[0].classList.add('active'); // Active "Définition"
+                }
+            });
+
+            // --- 4. Logique du Générateur d'Exercices (Paires) ---
+            let currentGeneratedRelation = new Set();
+            let currentGeneratedSolution = {};
+            const A_gen = [1, 2, 3]; // Ensemble pour le générateur
+
+            const generateButton = document.getElementById('generateButton');
+            const checkGeneratedButton = document.getElementById('checkGeneratedButton');
+            const relationDisplay = document.getElementById('generatedRelationDisplay');
+            const solutionDisplay = document.getElementById('generatorSolution');
+            const quizInputs = document.getElementById('generatorQuizInputs');
+
+            // Lie les événements
+            if (generateButton) {
+                generateButton.addEventListener('click', generateNewRelation);
+            }
+            if (checkGeneratedButton) {
+                checkGeneratedButton.addEventListener('click', checkGeneratedAnswer);
+            }
+
+            function generateNewRelation() {
+                currentGeneratedRelation.clear();
+                let pairs = [];
+                // Probabilité plus faible pour ne pas avoir des relations trop denses
+                const probability = 0.4; 
+
+                for (const a of A_gen) {
+                    for (const b of A_gen) {
+                        if (Math.random() < probability) {
+                            currentGeneratedRelation.add(`${a},${b}`);
+                            pairs.push(`(${a}, ${b})`);
+                        }
+                    }
+                }
+                
+                // Au cas où c'est vide, on ajoute au moins une paire pour que ce soit intéressant
+                if (pairs.length === 0) {
+                     const a = A_gen[Math.floor(Math.random() * 3)];
+                     const b = A_gen[Math.floor(Math.random() * 3)];
+                     currentGeneratedRelation.add(`${a},${b}`);
+                     pairs.push(`(${a}, ${b})`);
+                }
+
+                // Affiche la relation
+                relationDisplay.innerHTML = `$\mathcal{R} = \{ ${pairs.join(', ')} \}$`;
+                
+                // (Ré)analyse la relation et stocke la solution
+                currentGeneratedSolution = {
+                    r: checkReflexive(A_gen, currentGeneratedRelation),
+                    s: checkSymmetric(A_gen, currentGeneratedRelation),
+                    a: checkAntisymmetric(A_gen, currentGeneratedRelation),
+                    t: checkTransitive(A_gen, currentGeneratedRelation)
+                };
+                
+                // Réinitialise l'UI
+                solutionDisplay.classList.add('hidden');
+                solutionDisplay.innerHTML = ''; // Vide la solution précédente
+                quizInputs.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+                checkGeneratedButton.disabled = false;
+                
+                // Re-rend le LaTeX pour la nouvelle relation
+                try {
+                    if (window.renderMathInElement) {
+                        renderMathInElement(relationDisplay, {
+                            delimiters: [
+                                {left: "$", right: "$", display: false}
+                            ]
+                        });
+                    }
+                } catch(e) { console.error("Erreur KaTeX (générateur paires):", e); }
+            }
+
+            function checkGeneratedAnswer() {
+                const userR = quizInputs.querySelector('[data-prop="r"]').checked;
+                const userS = quizInputs.querySelector('[data-prop="s"]').checked;
+                const userA = quizInputs.querySelector('[data-prop="a"]').checked;
+                const userT = quizInputs.querySelector('[data-prop="t"]').checked;
+                
+                const sol = currentGeneratedSolution;
+                if (Object.keys(sol).length === 0) return; // N'a pas encore généré
+
+                const isCorrect = (userR === sol.r) && (userS === sol.s) && (userA === sol.a) && (userT === sol.t);
+
+                solutionDisplay.classList.remove('hidden');
+                // Réinitialise les styles
+                solutionDisplay.classList.remove(
+                    'border-green-700', 'bg-green-900/30', 'text-green-300', 
+                    'border-red-700', 'bg-red-900/30', 'text-red-300'
+                );
+                
+                let feedbackHTML = '';
+                
+                if (isCorrect) {
+                    solutionDisplay.classList.add('border-green-700', 'bg-green-900/30', 'text-green-300');
+                    feedbackHTML = '<p class="font-bold mb-2">✓ Correct !</p>';
+                } else {
+                    solutionDisplay.classList.add('border-red-700', 'bg-red-900/30', 'text-red-300');
+                    feedbackHTML = '<p class="font-bold mb-2">✗ Incorrect. Voici la correction :</p>';
+                }
+
+                // Fournit une analyse détaillée
+                feedbackHTML += '<ul class="list-disc list-inside">';
+                feedbackHTML += `<li><strong>Réflexive :</strong> ${sol.r ? 'Vrai' : 'Faux'} ${getFeedback('r', sol.r, currentGeneratedRelation)}</li>`;
+                feedbackHTML += `<li><strong>Symétrique :</strong> ${sol.s ? 'Vrai' : 'Faux'} ${getFeedback('s', sol.s, currentGeneratedRelation)}</li>`;
+                feedbackHTML += `<li><strong>Antisymétrique :</strong> ${sol.a ? 'Vrai' : 'Faux'} ${getFeedback('a', sol.a, currentGeneratedRelation)}</li>`;
+                feedbackHTML += `<li><strong>Transitive :</strong> ${sol.t ? 'Vrai' : 'Faux'} ${getFeedback('t', sol.t, currentGeneratedRelation)}</li>`;
+                feedbackHTML += '</ul>';
+
+                solutionDisplay.innerHTML = feedbackHTML;
+                checkGeneratedButton.disabled = true; // Empêche de recliquer
+                
+                // Re-rend le LaTeX pour le feedback
+                try {
+                    if (window.renderMathInElement) {
+                        renderMathInElement(solutionDisplay, {
+                            delimiters: [ {left: "$", right: "$", display: false} ]
+                        });
+                    }
+                } catch(e) { console.error("Erreur KaTeX (feedback paires):", e); }
+            }
+
+            // Fonction helper pour donner une raison
+            function getFeedback(prop, isTrue, R) {
+                if (prop === 'r' && !isTrue) {
+                    for (const a of A_gen) if (!has(R, a, a)) return `(contre-exemple: (${a},${a}) manque).`;
+                }
+                if (prop === 's' && !isTrue) {
+                    for (const a of A_gen) for (const b of A_gen) {
+                        if (has(R, a, b) && !has(R, b, a)) return `(contre-exemple: (${a},${b}) existe mais (${b},${a}) manque).`;
+                    }
+                }
+                if (prop === 'a' && !isTrue) {
+                     for (const a of A_gen) for (const b of A_gen) {
+                        if (a !== b && has(R, a, b) && has(R, b, a)) return `(contre-exemple: (${a},${b}) et (${b},${a}) existent mais ${a} != ${b}).`;
+                    }
+                }
+                if (prop === 't' && !isTrue) {
+                    for (const a of A_gen) for (const b of A_gen) for (const c of A_gen) {
+                        if (has(R, a, b) && has(R, b, c) && !has(R, a, c)) return `(contre-exemple: (${a},${b}) et (${b},${c}) existent mais (${a},${c}) manque).`;
+                    }
+                }
+                return ''; // Pas de feedback négatif nécessaire
+            }
+
+            // --- 5. Logique du NOUVEAU Générateur (Matrices) ---
+            let currentGeneratedMatrix = [];
+            let currentMatrixSolution = {};
+            const N_MAT = 3; // Taille de la matrice (3x3)
+
+            const generateMatrixButton = document.getElementById('generateMatrixButton');
+            const checkMatrixButton = document.getElementById('checkMatrixButton');
+            const matrixDisplay = document.getElementById('matrixDisplay').querySelector('pre');
+            const matrixSolutionDisplay = document.getElementById('matrixSolution');
+            const matrixQuizInputs = document.getElementById('matrixQuizInputs');
+
+            if (generateMatrixButton) {
+                generateMatrixButton.addEventListener('click', generateNewMatrix);
+            }
+            if (checkMatrixButton) {
+                checkMatrixButton.addEventListener('click', checkMatrixAnswer);
+            }
+
+            function generateNewMatrix() {
+                currentGeneratedMatrix = [];
+                let hasOne = false;
+                const probability = 0.4;
+                
+                for (let i = 0; i < N_MAT; i++) {
+                    let row = [];
+                    for (let j = 0; j < N_MAT; j++) {
+                        const val = Math.random() < probability ? 1 : 0;
+                        if (val === 1) hasOne = true;
+                        row.push(val);
+                    }
+                    currentGeneratedMatrix.push(row);
+                }
+                
+                // Assure que la matrice n'est pas vide
+                if (!hasOne) {
+                    const i = Math.floor(Math.random() * N_MAT);
+                    const j = Math.floor(Math.random() * N_MAT);
+                    currentGeneratedMatrix[i][j] = 1;
+                }
+
+                // Affiche la matrice
+                let matrixHTML = "    1  2  3\n";
+                matrixHTML += "   ---------\n";
+                for(let i=0; i < N_MAT; i++) {
+                    matrixHTML += `${i+1} | [${currentGeneratedMatrix[i].join(', ')}]`;
+                    if (i < N_MAT - 1) matrixHTML += '\n';
+                }
+                matrixDisplay.textContent = matrixHTML;
+
+                // Analyse et stocke la solution
+                currentMatrixSolution = {
+                    r: checkReflexiveMatrix(currentGeneratedMatrix),
+                    s: checkSymmetricMatrix(currentGeneratedMatrix),
+                    a: checkAntisymmetricMatrix(currentGeneratedMatrix),
+                    t: checkTransitiveMatrix(currentGeneratedMatrix)
+                };
+                
+                // Réinitialise l'UI
+                matrixSolutionDisplay.classList.add('hidden');
+                matrixSolutionDisplay.innerHTML = '';
+                matrixQuizInputs.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+                checkMatrixButton.disabled = false;
+            }
+
+            function checkMatrixAnswer() {
+                const userR = matrixQuizInputs.querySelector('[data-prop="r"]').checked;
+                const userS = matrixQuizInputs.querySelector('[data-prop="s"]').checked;
+                const userA = matrixQuizInputs.querySelector('[data-prop="a"]').checked;
+                const userT = matrixQuizInputs.querySelector('[data-prop="t"]').checked;
+
+                const sol = currentMatrixSolution;
+                if (Object.keys(sol).length === 0) return;
+
+                const isCorrect = (userR === sol.r) && (userS === sol.s) && (userA === sol.a) && (userT === sol.t);
+
+                matrixSolutionDisplay.classList.remove('hidden');
+                matrixSolutionDisplay.classList.remove(
+                    'border-green-700', 'bg-green-900/30', 'text-green-300', 
+                    'border-red-700', 'bg-red-900/30', 'text-red-300'
+                );
+                
+                let feedbackHTML = '';
+                if (isCorrect) {
+                    matrixSolutionDisplay.classList.add('border-green-700', 'bg-green-900/30', 'text-green-300');
+                    feedbackHTML = '<p class="font-bold mb-2">✓ Correct !</p>';
+                } else {
+                    matrixSolutionDisplay.classList.add('border-red-700', 'bg-red-900/30', 'text-red-300');
+                    feedbackHTML = '<p class="font-bold mb-2">✗ Incorrect. Voici la correction :</p>';
+                }
+
+                feedbackHTML += '<ul class="list-disc list-inside">';
+                feedbackHTML += `<li><strong>Réflexive :</strong> ${sol.r ? 'Vrai' : 'Faux'} ${getMatrixFeedback('r', sol.r, currentGeneratedMatrix)}</li>`;
+                feedbackHTML += `<li><strong>Symétrique :</strong> ${sol.s ? 'Vrai' : 'Faux'} ${getMatrixFeedback('s', sol.s, currentGeneratedMatrix)}</li>`;
+                feedbackHTML += `<li><strong>Antisymétrique :</strong> ${sol.a ? 'Vrai' : 'Faux'} ${getMatrixFeedback('a', sol.a, currentGeneratedMatrix)}</li>`;
+                feedbackHTML += `<li><strong>Transitive :</strong> ${sol.t ? 'Vrai' : 'Faux'} ${getMatrixFeedback('t', sol.t, currentGeneratedMatrix)}</li>`;
+                feedbackHTML += '</ul>';
+
+                matrixSolutionDisplay.innerHTML = feedbackHTML;
+                checkMatrixButton.disabled = true;
+                
+                // Re-rend le LaTeX pour le feedback
+                try {
+                    if (window.renderMathInElement) {
+                        renderMathInElement(matrixSolutionDisplay, {
+                            delimiters: [ {left: "$", right: "$", display: false} ]
+                        });
+                    }
+                } catch(e) { console.error("Erreur KaTeX (feedback matrice):", e); }
+            }
+            
+            // Fonctions de vérification pour les matrices (0-indexed)
+            function checkReflexiveMatrix(M) {
+                for (let i = 0; i < N_MAT; i++) {
+                    if (M[i][i] === 0) return false;
+                }
+                return true;
+            }
+
+            function checkSymmetricMatrix(M) {
+                for (let i = 0; i < N_MAT; i++) {
+                    for (let j = i + 1; j < N_MAT; j++) { // j = i + 1 pour ne vérifier que la triang. sup.
+                        if (M[i][j] !== M[j][i]) return false;
+                    }
+                }
+                return true;
+            }
+
+            function checkAntisymmetricMatrix(M) {
+                for (let i = 0; i < N_MAT; i++) {
+                    for (let j = i + 1; j < N_MAT; j++) { // j = i + 1
+                        if (M[i][j] === 1 && M[j][i] === 1) return false;
+                    }
+                }
+                return true;
+            }
+
+            function checkTransitiveMatrix(M) {
+                for (let i = 0; i < N_MAT; i++) {
+                    for (let j = 0; j < N_MAT; j++) {
+                        for (let k = 0; k < N_MAT; k++) {
+                            if (M[i][j] === 1 && M[j][k] === 1 && M[i][k] === 0) return false;
+                        }
+                    }
+                }
+                return true;
+            }
+            
+            // Feedback pour la matrice (reporte en 1-indexed)
+            function getMatrixFeedback(prop, isTrue, M) {
+                if (prop === 'r') {
+                    if (isTrue) {
+                        return `(Vrai, car la diagonale $M[i,i]$ ne contient que des 1.)`;
+                    } else {
+                        for (let i = 0; i < N_MAT; i++) if (M[i][i] === 0) return `(Faux. Pour être réflexive, la diagonale ne doit avoir que des 1. Contre-exemple: $M[${i+1},${i+1}]$ est 0).`;
+                        return "(Faux. La diagonale n'a pas que des 1.)"; // Fallback
+                    }
+                }
+                if (prop === 's') {
+                    if (isTrue) {
+                         return `(Vrai, car la matrice est symétrique: $M[i,j] = M[j,i]$ pour tous $i, j$.)`;
+                    } else {
+                        for (let i = 0; i < N_MAT; i++) for (let j = i + 1; j < N_MAT; j++) {
+                            if (M[i][j] !== M[j][i]) return `(Faux. Pour être symétrique, on doit avoir $M[i,j] = M[j,i]$. Contre-exemple: $M[${i+1},${j+1}]$ (${M[i][j]}) $\\neq$ $M[${j+1},${i+1}]$ (${M[j][i]})).`;
+                        }
+                        return "(Faux. La matrice n'est pas symétrique.)"; // Fallback
+                    }
+                }
+                if (prop === 'a') {
+                    if (isTrue) {
+                        return `(Vrai. Pour être antisymétrique, on vérifie que pour $i \\neq j$, on n'a jamais $M[i,j]=1$ et $M[j,i]=1$ en même temps. C'est le cas.)`;
+                    } else {
+                        let feedback = `(Faux. Pour être antisymétrique, on ne doit *jamais* avoir $M[i,j]=1$ et $M[j,i]=1$ pour $i \\neq j$. `;
+                        for (let i = 0; i < N_MAT; i++) for (let j = i + 1; j < N_MAT; j++) {
+                            if (M[i][j] === 1 && M[j][i] === 1) {
+                                feedback += `Contre-exemple : $M[${i+1},${j+1}]=1$ et $M[${j+1},${i+1}]=1$ existent.)`;
+                                return feedback;
+                            }
+                        }
+                        return feedback + " Un contre-exemple a été trouvé.)"; // Fallback
+                    }
+                }
+                if (prop === 't') {
+                    if (isTrue) {
+                        return `(Vrai. Pour être transitive, on vérifie que pour *tous* les chemins $i \\to j \\to k$ (où $M[i,j]=1$ et $M[j,k]=1$), le raccourci $M[i,k]=1$ existe bien. C'est le cas.)`;
+                    } else {
+                        let feedback = `(Faux. On cherche un chemin $i \\to j \\to k$ (donc $M[i,j]=1$ et $M[j,k]=1$) qui n'a pas de raccourci $i \to k$ (où $M[i,k]=0$). `;
+                        for (let i = 0; i < N_MAT; i++) for (let j = 0; j < N_MAT; j++) for (let k = 0; k < N_MAT; k++) {
+                            if (M[i][j] === 1 && M[j][k] === 1 && M[i][k] === 0) {
+                                feedback += `Contre-exemple : $M[${i+1},${j+1}]=1$ (chemin $i \\to j$) et $M[${j+1},${k+1}]=1$ (chemin $j \\to k$), mais le raccourci $M[${i+1},${k+1}]=0$ manque.)`;
+                                return feedback;
+                            }
+                        }
+                        return feedback + " Un contre-exemple a été trouvé.)"; // Fallback
+                    }
+                }
+                return ''; // Ne devrait pas arriver
+            }
+
+
+            // --- Fin de la logique du générateur ---
+
+            // Initialiser les générateurs au chargement
+            generateNewRelation();
+            generateNewMatrix();
+        });
+    </script>
+</body>
+</html>
