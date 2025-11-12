@@ -76,7 +76,7 @@
                 <p class="text-lg mb-4">
                     Formellement, une relation binaire $\mathcal{R}$ d'un ensemble de départ $A$ vers un ensemble d'arrivée $B$ est un sous-ensemble du produit cartésien $A \times B$.
                 </p>
-                $$ \mathcal{R} \subseteq A \times B $$
+                $$\mathcal{R} \subseteq A \times B$$
                 <p class="text-lg mb-4">
                     Si $(a, b) \in \mathcal{R}$, on dit que $a$ est en relation avec $b$, et on note souvent $a \mathcal{R} b$.
                 </p>
@@ -102,7 +102,7 @@
 
                 <h3 class="mt-6">2. Par une matrice d'adjacence</h3>
                 <p>Si $A = \{a_1, a_2, \dots, a_n\}$, on crée une matrice $M$ de taille $n \times n$ où :</p>
-                $$ M_{i,j} = \begin{cases} 1 & \text{si } (a_i, a_j) \in \mathcal{R} \\ 0 & \text{sinon} \end{cases} $$
+                $$M_{i,j} = \begin{cases} 1 & \text{si } (a_i, a_j) \in \mathcal{R} \\ 0 & \text{sinon} \end{cases}$$
                 <p>Exemple pour $\mathcal{R} = \{ (a, a), (a, c), (b, c) \}$ :</p>
                 <pre class="bg-slate-700 p-4 rounded-lg font-mono text-sm border border-slate-600 text-slate-300">
       a  b  c
@@ -250,6 +250,103 @@
                     </div>
                 </div>
 
+                <!-- NOUVEAU: Exercice 4x4 : Générateur par Matrice -->
+                <h3 class="mt-10">Générateur d'Exercices (Matrices 4x4)</h3>
+                <p class="mb-4">Besoin de plus de défi ? Générez une matrice 4x4. Il y a 65 536 relations possibles !</p>
+                
+                <div class="p-5 bg-slate-700 border border-slate-600 rounded-lg">
+                    <button id="generateMatrixButton4x4" class="px-6 py-3 bg-blue-700 text-white font-semibold rounded-lg shadow-md hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors mb-4">
+                        Générer (Matrice 4x4)
+                    </button>
+                    <div id="matrixDisplay4x4" class="mb-4 p-4 bg-slate-800 border border-slate-600 rounded-md min-h-[50px]">
+                        <pre class="font-mono text-lg text-slate-300"></pre>
+                    </div>
+                    
+                    <h4 class="text-lg font-semibold mb-3">Vos réponses :</h4>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4 quiz-inputs" id="matrixQuizInputs4x4">
+                        <label class="flex items-center space-x-2"><input type="checkbox" data-prop="r" class="form-checkbox"><span>Réflexive</span></label>
+                        <label class="flex items-center space-x-2"><input type="checkbox" data-prop="s" class="form-checkbox"><span>Symétrique</span></label>
+                        <label class="flex items-center space-x-2"><input type="checkbox" data-prop="a" class="form-checkbox"><span>Antisymétrique</span></label>
+                        <label class="flex items-center space-x-2"><input type="checkbox" data-prop="t" class="form-checkbox"><span>Transitive</span></label>
+                    </div>
+                    
+                    <button id="checkMatrixButton4x4" class="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700">Vérifier</button>
+                    
+                    <div id="matrixSolution4x4" class="hidden mt-4 p-4 border-l-4">
+                        <!-- Le feedback de la matrice 4x4 s'affichera ici -->
+                    </div>
+                </div>
+                
+                <!-- NOUVEAU: Exercices de Compréhension (Relations Célèbres) -->
+                <h3 class="mt-10">Exercices de Compréhension (Relations Célèbres)</h3>
+                <p class="mb-4">Testez votre compréhension sur des relations classiques qui ne sont pas aléatoires. Cochez les propriétés et vérifiez.</p>
+
+                <!-- Quiz 1: <= -->
+                <div class="p-5 bg-slate-700 border border-slate-600 rounded-lg mb-6" id="quiz-le">
+                    <p class="font-mono text-lg mb-4">Quiz 1: $\mathcal{R}$ sur $\mathbb{Z}$ (entiers) définie par $a \mathcal{R} b \iff a \le b$</p>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4 quiz-inputs">
+                        <label class="flex items-center space-x-2"><input type="checkbox" data-prop="r" class="form-checkbox"><span>Réflexive</span></label>
+                        <label class="flex items-center space-x-2"><input type="checkbox" data-prop="s" class="form-checkbox"><span>Symétrique</span></label>
+                        <label class="flex items-center space-x-2"><input type="checkbox" data-prop="a" class="form-checkbox"><span>Antisymétrique</span></label>
+                        <label class="flex items-center space-x-2"><input type="checkbox" data-prop="t" class="form-checkbox"><span>Transitive</span></label>
+                    </div>
+                    <button class="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 check-static-quiz">Vérifier</button>
+                    <div class="hidden mt-4 p-4 border-l-4 solution-div"></div>
+                </div>
+
+                <!-- Quiz 2: = -->
+                <div class="p-5 bg-slate-700 border border-slate-600 rounded-lg mb-6" id="quiz-eq">
+                    <p class="font-mono text-lg mb-4">Quiz 2: $\mathcal{R}$ sur $\mathbb{Z}$ (entiers) définie par $a \mathcal{R} b \iff a = b$</p>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4 quiz-inputs">
+                        <label class="flex items-center space-x-2"><input type="checkbox" data-prop="r" class="form-checkbox"><span>Réflexive</span></label>
+                        <label class="flex items-center space-x-2"><input type="checkbox" data-prop="s" class="form-checkbox"><span>Symétrique</span></label>
+                        <label class="flex items-center space-x-2"><input type="checkbox" data-prop="a" class="form-checkbox"><span>Antisymétrique</span></label>
+                        <label class="flex items-center space-x-2"><input type="checkbox" data-prop="t" class="form-checkbox"><span>Transitive</span></label>
+                    </div>
+                    <button class="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 check-static-quiz">Vérifier</button>
+                    <div class="hidden mt-4 p-4 border-l-4 solution-div"></div>
+                </div>
+
+                <!-- Quiz 3: divise -->
+                <div class="p-5 bg-slate-700 border border-slate-600 rounded-lg mb-6" id="quiz-div">
+                    <p class="font-mono text-lg mb-4">Quiz 3: $\mathcal{R}$ sur $\mathbb{N}^*$ (entiers > 0) définie par $a \mathcal{R} b \iff a \text{ divise } b$</p>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4 quiz-inputs">
+                        <label class="flex items-center space-x-2"><input type="checkbox" data-prop="r" class="form-checkbox"><span>Réflexive</span></label>
+                        <label class="flex items-center space-x-2"><input type="checkbox" data-prop="s" class="form-checkbox"><span>Symétrique</span></label>
+                        <label class="flex items-center space-x-2"><input type="checkbox" data-prop="a" class="form-checkbox"><span>Antisymétrique</span></label>
+                        <label class="flex items-center space-x-2"><input type="checkbox" data-prop="t" class="form-checkbox"><span>Transitive</span></label>
+                    </div>
+                    <button class="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 check-static-quiz">Vérifier</button>
+                    <div class="hidden mt-4 p-4 border-l-4 solution-div"></div>
+                </div>
+                
+                <!-- Quiz 4: mod 3 -->
+                <div class="p-5 bg-slate-700 border border-slate-600 rounded-lg mb-6" id="quiz-mod">
+                    <p class="font-mono text-lg mb-4">Quiz 4: $\mathcal{R}$ sur $\mathbb{Z}$ définie par $a \mathcal{R} b \iff a \equiv b \pmod 3$</p>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4 quiz-inputs">
+                        <label class="flex items-center space-x-2"><input type="checkbox" data-prop="r" class="form-checkbox"><span>Réflexive</span></label>
+                        <label class="flex items-center space-x-2"><input type="checkbox" data-prop="s" class="form-checkbox"><span>Symétrique</span></label>
+                        <label class="flex items-center space-x-2"><input type="checkbox" data-prop="a" class="form-checkbox"><span>Antisymétrique</span></label>
+                        <label class="flex items-center space-x-2"><input type="checkbox" data-prop="t" class="form-checkbox"><span>Transitive</span></label>
+                    </div>
+                    <button class="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 check-static-quiz">Vérifier</button>
+                    <div class="hidden mt-4 p-4 border-l-4 solution-div"></div>
+                </div>
+                
+                <!-- Quiz 5: != -->
+                <div class="p-5 bg-slate-700 border border-slate-600 rounded-lg mb-6" id="quiz-neq">
+                    <p class="font-mono text-lg mb-4">Quiz 5: $\mathcal{R}$ sur $\mathbb{Z}$ définie par $a \mathcal{R} b \iff a \ne b$</p>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4 quiz-inputs">
+                        <label class="flex items-center space-x-2"><input type="checkbox" data-prop="r" class="form-checkbox"><span>Réflexive</span></label>
+                        <label class="flex items-center space-x-2"><input type="checkbox" data-prop="s" class="form-checkbox"><span>Symétrique</span></label>
+                        <label class="flex items-center space-x-2"><input type="checkbox" data-prop="a" class="form-checkbox"><span>Antisymétrique</span></label>
+                        <label class="flex items-center space-x-2"><input type="checkbox" data-prop="t" class="form-checkbox"><span>Transitive</span></label>
+                    </div>
+                    <button class="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 check-static-quiz">Vérifier</button>
+                    <div class="hidden mt-4 p-4 border-l-4 solution-div"></div>
+                </div>
+                <!-- FIN des nouveaux exercices -->
+
 
                 <!-- Exercice 3 -->
                 <h3 class="mt-10">Exercice 3 : Relation sur $\mathcal{P}(E)$ (Ensemble des parties)</h3>
@@ -297,7 +394,7 @@
 
                 <h3>Classe d'équivalence</h3>
                 <p>Si $\mathcal{R}$ est une relation d'équivalence, la <strong>classe d'équivalence</strong> d'un élément $a \in A$, notée $[a]$, est l'ensemble de tous les éléments en relation avec $a$.</p>
-                $$ [a] = \{ x \in A \mid x \mathcal{R} a \} $$
+                $$[a] = \{ x \in A \mid x \mathcal{R} a \}$$
                 <p class="mt-2">Propriété clé : $x \mathcal{R} y \iff [x] = [y]$.</p>
 
                 <h3>Ensemble Quotient</h3>
@@ -370,12 +467,12 @@
                 <h3 class="mt-6">Fermeture Réflexive $r(\mathcal{R})$</h3>
                 <p>On ajoute simplement toutes les boucles manquantes.</p>
                 <p>Soit $\Delta_A = \{(a, a) \mid a \in A\}$ (la relation identité).</p>
-                $$ r(\mathcal{R}) = \mathcal{R} \cup \Delta_A $$
+                $$r(\mathcal{R}) = \mathcal{R} \cup \Delta_A$$
 
                 <h3 class="mt-6">Fermeture Symétrique $s(\mathcal{R})$</h3>
                 <p>On ajoute l'arête "retour" pour chaque arête existante.</p>
                 <p>Soit $\mathcal{R}^{-1} = \{(b, a) \mid (a, b) \in \mathcal{R}\}$ (la relation inverse).</p>
-                $$ s(\mathcal{R}) = \mathcal{R} \cup \mathcal{R}^{-1} $$
+                $$s(\mathcal{R}) = \mathcal{R} \cup \mathcal{R}^{-1}$$
 
                 <h3 class="mt-6">Fermeture Transitive $t(\mathcal{R})$</h3>
                 <p>C'est la plus complexe. On ajoute tous les "raccourcis" possibles. Si on peut aller de $a$ à $c$ en plusieurs étapes ($a \to b_1 \to \dots \to b_k \to c$), on ajoute l'arête directe $(a, c)$.</p>
@@ -973,10 +1070,260 @@
 
 
             // --- Fin de la logique du générateur ---
+            
+            // --- 5.5. Logique du Générateur (Matrices 4x4) ---
+            let currentGeneratedMatrix4x4 = [];
+            let currentMatrixSolution4x4 = {};
+            const N_MAT_4 = 4; // Taille de la matrice (4x4)
+
+            const generateMatrixButton4x4 = document.getElementById('generateMatrixButton4x4');
+            const checkMatrixButton4x4 = document.getElementById('checkMatrixButton4x4');
+            const matrixDisplay4x4 = document.getElementById('matrixDisplay4x4').querySelector('pre');
+            const matrixSolutionDisplay4x4 = document.getElementById('matrixSolution4x4');
+            const matrixQuizInputs4x4 = document.getElementById('matrixQuizInputs4x4');
+
+            if (generateMatrixButton4x4) {
+                generateMatrixButton4x4.addEventListener('click', generateNewMatrix4x4);
+            }
+            if (checkMatrixButton4x4) {
+                checkMatrixButton4x4.addEventListener('click', checkMatrixAnswer4x4);
+            }
+
+            function generateNewMatrix4x4() {
+                currentGeneratedMatrix4x4 = [];
+                let hasOne = false;
+                const probability = 0.35; // Probabilité légèrement plus faible pour 4x4
+                
+                for (let i = 0; i < N_MAT_4; i++) {
+                    let row = [];
+                    for (let j = 0; j < N_MAT_4; j++) {
+                        const val = Math.random() < probability ? 1 : 0;
+                        if (val === 1) hasOne = true;
+                        row.push(val);
+                    }
+                    currentGeneratedMatrix4x4.push(row);
+                }
+                
+                if (!hasOne) {
+                    const i = Math.floor(Math.random() * N_MAT_4);
+                    const j = Math.floor(Math.random() * N_MAT_4);
+                    currentGeneratedMatrix4x4[i][j] = 1;
+                }
+
+                // Affiche la matrice
+                let matrixHTML = "    1  2  3  4\n";
+                matrixHTML += "   -----------\n";
+                for(let i=0; i < N_MAT_4; i++) {
+                    matrixHTML += `${i+1} | [${currentGeneratedMatrix4x4[i].join(', ')}]`;
+                    if (i < N_MAT_4 - 1) matrixHTML += '\n';
+                }
+                matrixDisplay4x4.textContent = matrixHTML;
+
+                // Analyse et stocke la solution
+                currentMatrixSolution4x4 = {
+                    r: checkReflexiveMatrix4x4(currentGeneratedMatrix4x4),
+                    s: checkSymmetricMatrix4x4(currentGeneratedMatrix4x4),
+                    a: checkAntisymmetricMatrix4x4(currentGeneratedMatrix4x4),
+                    t: checkTransitiveMatrix4x4(currentGeneratedMatrix4x4)
+                };
+                
+                // Réinitialise l'UI
+                matrixSolutionDisplay4x4.classList.add('hidden');
+                matrixSolutionDisplay4x4.innerHTML = '';
+                matrixQuizInputs4x4.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+                checkMatrixButton4x4.disabled = false;
+            }
+
+            function checkMatrixAnswer4x4() {
+                const userR = matrixQuizInputs4x4.querySelector('[data-prop="r"]').checked;
+                const userS = matrixQuizInputs4x4.querySelector('[data-prop="s"]').checked;
+                const userA = matrixQuizInputs4x4.querySelector('[data-prop="a"]').checked;
+                const userT = matrixQuizInputs4x4.querySelector('[data-prop="t"]').checked;
+
+                const sol = currentMatrixSolution4x4;
+                if (Object.keys(sol).length === 0) return;
+
+                const isCorrect = (userR === sol.r) && (userS === sol.s) && (userA === sol.a) && (userT === sol.t);
+
+                matrixSolutionDisplay4x4.classList.remove('hidden');
+                matrixSolutionDisplay4x4.classList.remove('border-green-700', 'bg-green-900/30', 'text-green-300', 'border-red-700', 'bg-red-900/30', 'text-red-300');
+                
+                let feedbackHTML = '';
+                if (isCorrect) {
+                    matrixSolutionDisplay4x4.classList.add('border-green-700', 'bg-green-900/30', 'text-green-300');
+                    feedbackHTML = '<p class="font-bold mb-2">✓ Correct !</p>';
+                } else {
+                    matrixSolutionDisplay4x4.classList.add('border-red-700', 'bg-red-900/30', 'text-red-300');
+                    feedbackHTML = '<p class="font-bold mb-2">✗ Incorrect. Voici la correction :</p>';
+                }
+
+                feedbackHTML += '<ul class="list-disc list-inside">';
+                feedbackHTML += `<li><strong>Réflexive :</strong> ${sol.r ? 'Vrai' : 'Faux'} ${getMatrixFeedback4x4('r', sol.r, currentGeneratedMatrix4x4)}</li>`;
+                feedbackHTML += `<li><strong>Symétrique :</strong> ${sol.s ? 'Vrai' : 'Faux'} ${getMatrixFeedback4x4('s', sol.s, currentGeneratedMatrix4x4)}</li>`;
+                feedbackHTML += `<li><strong>Antisymétrique :</strong> ${sol.a ? 'Vrai' : 'Faux'} ${getMatrixFeedback4x4('a', sol.a, currentGeneratedMatrix4x4)}</li>`;
+                feedbackHTML += `<li><strong>Transitive :</strong> ${sol.t ? 'Vrai' : 'Faux'} ${getMatrixFeedback4x4('t', sol.t, currentGeneratedMatrix4x4)}</li>`;
+                feedbackHTML += '</ul>';
+
+                matrixSolutionDisplay4x4.innerHTML = feedbackHTML;
+                checkMatrixButton4x4.disabled = true;
+                
+                try {
+                    if (window.renderMathInElement) {
+                        renderMathInElement(matrixSolutionDisplay4x4, { delimiters: [ {left: "$", right: "$", display: false} ] });
+                    }
+                } catch(e) { console.error("Erreur KaTeX (feedback matrice 4x4):", e); }
+            }
+
+            // Fonctions de vérification pour les matrices 4x4
+            function checkReflexiveMatrix4x4(M) {
+                for (let i = 0; i < N_MAT_4; i++) if (M[i][i] === 0) return false;
+                return true;
+            }
+            function checkSymmetricMatrix4x4(M) {
+                for (let i = 0; i < N_MAT_4; i++) for (let j = i + 1; j < N_MAT_4; j++) if (M[i][j] !== M[j][i]) return false;
+                return true;
+            }
+            function checkAntisymmetricMatrix4x4(M) {
+                for (let i = 0; i < N_MAT_4; i++) for (let j = i + 1; j < N_MAT_4; j++) if (M[i][j] === 1 && M[j][i] === 1) return false;
+                return true;
+            }
+            function checkTransitiveMatrix4x4(M) {
+                for (let i = 0; i < N_MAT_4; i++) for (let j = 0; j < N_MAT_4; j++) for (let k = 0; k < N_MAT_4; k++) {
+                    if (M[i][j] === 1 && M[j][k] === 1 && M[i][k] === 0) return false;
+                }
+                return true;
+            }
+            // Feedback pour la matrice 4x4
+            function getMatrixFeedback4x4(prop, isTrue, M) {
+                 if (prop === 'r') {
+                    if (isTrue) return `(Vrai, car la diagonale $M[i,i]$ ne contient que des 1.)`;
+                    for (let i = 0; i < N_MAT_4; i++) if (M[i][i] === 0) return `(Faux. Contre-exemple: $M[${i+1},${i+1}]$ est 0).`;
+                }
+                if (prop === 's') {
+                    if (isTrue) return `(Vrai, car $M[i,j] = M[j,i]$ pour tous $i, j$.)`;
+                    for (let i = 0; i < N_MAT_4; i++) for (let j = i + 1; j < N_MAT_4; j++) if (M[i][j] !== M[j][i]) return `(Faux. Contre-exemple: $M[${i+1},${j+1}]$ $\\neq$ $M[${j+1},${i+1}]$).`;
+                }
+                if (prop === 'a') {
+                    if (isTrue) return `(Vrai. On n'a jamais $M[i,j]=1$ et $M[j,i]=1$ en même temps pour $i \\neq j$.)`;
+                    for (let i = 0; i < N_MAT_4; i++) for (let j = i + 1; j < N_MAT_4; j++) if (M[i][j] === 1 && M[j][i] === 1) return `(Faux. Contre-exemple: $M[${i+1},${j+1}]=1$ et $M[${j+1},${i+1}]=1$).`;
+                }
+                if (prop === 't') {
+                    if (isTrue) return `(Vrai. Tous les chemins $i \\to j \\to k$ ont un raccourci $i \\to k$.)`;
+                    for (let i = 0; i < N_MAT_4; i++) for (let j = 0; j < N_MAT_4; j++) for (let k = 0; k < N_MAT_4; k++) {
+                        if (M[i][j] === 1 && M[j][k] === 1 && M[i][k] === 0) return `(Faux. Contre-exemple: $M[${i+1},${j+1}]=1$ et $M[${j+1},${k+1}]=1$, mais $M[${i+1},${k+1}]=0$).`;
+                    }
+                }
+                return '';
+            }
+
+            // --- 6. Logique des Quiz Statiques (NOUVEAU) ---
+            const staticQuizzes = [
+                { 
+                    id: 'quiz-le', 
+                    sol: { r: true, s: false, a: true, t: true }, 
+                    desc: { 
+                        r: "(Vrai, $a \le a$)", 
+                        s: "(Faux, $2 \le 3$ mais $3 \not\le 2$)", 
+                        a: "(Vrai, $a \le b$ et $b \le a \implies a=b$)", 
+                        t: "(Vrai, $a \le b$ et $b \le c \implies a \le c$)" 
+                    } 
+                },
+                { 
+                    id: 'quiz-eq', 
+                    sol: { r: true, s: true, a: true, t: true },
+                    desc: { 
+                        r: "(Vrai, $a = a$)", 
+                        s: "(Vrai, $a=b \implies b=a$)", 
+                        a: "(Vrai, $a=b$ et $b=a \implies a=b$)", 
+                        t: "(Vrai, $a=b$ et $b=c \implies a=c$)" 
+                    } 
+                },
+                { 
+                    id: 'quiz-div', 
+                    sol: { r: true, s: false, a: true, t: true },
+                    desc: { 
+                        r: "(Vrai, $a$ divise $a$)", 
+                        s: "(Faux, $2$ divise $4$ mais $4$ ne divise pas $2$)", 
+                        a: "(Vrai, $a|b$ et $b|a \implies a=b$ sur $\mathbb{N}^*$)", 
+                        t: "(Vrai, $a|b$ et $b|c \implies a|c$)" 
+                    } 
+                },
+                { 
+                    id: 'quiz-mod', 
+                    sol: { r: true, s: true, a: false, t: true },
+                    desc: { 
+                        r: "(Vrai, $a-a=0$ est divisible par 3)", 
+                        s: "(Vrai, $a-b$ divisible par 3 $\implies b-a$ l'est aussi)", 
+                        a: "(Faux, $1 \equiv 4 \pmod 3$ et $4 \equiv 1 \pmod 3$ mais $1 \ne 4$)", 
+                        t: "(Vrai, $a \equiv b$ et $b \equiv c \implies a \equiv c$)" 
+                    } 
+                },
+                { 
+                    id: 'quiz-neq', 
+                    sol: { r: false, s: true, a: false, t: false },
+                    desc: { 
+                        r: "(Faux, $a \ne a$ est faux)", 
+                        s: "(Vrai, $a \ne b \implies b \ne a$)", 
+                        a: "(Faux, $1 \ne 2$ et $2 \ne 1$, mais on n'a pas $1=2$)", 
+                        t: "(Faux, $1 \ne 2$ et $2 \ne 1$, mais on n'a *pas* $1 \ne 1$)" 
+                    } 
+                }
+            ];
+
+            staticQuizzes.forEach(quizInfo => {
+                const quizElement = document.getElementById(quizInfo.id);
+                if (!quizElement) return;
+
+                const button = quizElement.querySelector('.check-static-quiz');
+                const solutionDiv = quizElement.querySelector('.solution-div');
+                
+                button.addEventListener('click', () => {
+                    const userR = quizElement.querySelector('[data-prop="r"]').checked;
+                    const userS = quizElement.querySelector('[data-prop="s"]').checked;
+                    const userA = quizElement.querySelector('[data-prop="a"]').checked;
+                    const userT = quizElement.querySelector('[data-prop="t"]').checked;
+                    
+                    const sol = quizInfo.sol;
+                    const desc = quizInfo.desc;
+                    const isCorrect = (userR === sol.r) && (userS === sol.s) && (userA === sol.a) && (userT === sol.t);
+
+                    solutionDiv.classList.remove('hidden');
+                    solutionDiv.classList.remove('border-green-700', 'bg-green-900/30', 'text-green-300', 'border-red-700', 'bg-red-900/30', 'text-red-300');
+                    
+                    let feedbackHTML = '';
+                    if (isCorrect) {
+                        solutionDiv.classList.add('border-green-700', 'bg-green-900/30', 'text-green-300');
+                        feedbackHTML = '<p class="font-bold mb-2">✓ Correct !</p>';
+                    } else {
+                        solutionDiv.classList.add('border-red-700', 'bg-red-900/30', 'text-red-300');
+                        feedbackHTML = '<p class="font-bold mb-2">✗ Incorrect. Voici la correction :</p>';
+                    }
+
+                    feedbackHTML += '<ul class="list-disc list-inside">';
+                    feedbackHTML += `<li><strong>Réflexive :</strong> ${sol.r ? 'Vrai' : 'Faux'} ${desc.r}</li>`;
+                    feedbackHTML += `<li><strong>Symétrique :</strong> ${sol.s ? 'Vrai' : 'Faux'} ${desc.s}</li>`;
+                    feedbackHTML += `<li><strong>Antisymétrique :</strong> ${sol.a ? 'Vrai' : 'Faux'} ${desc.a}</li>`;
+                    feedbackHTML += `<li><strong>Transitive :</strong> ${sol.t ? 'Vrai' : 'Faux'} ${desc.t}</li>`;
+                    feedbackHTML += '</ul>';
+
+                    solutionDiv.innerHTML = feedbackHTML;
+                    button.disabled = true; // Empêche de recliquer
+                    
+                    // Re-rend le LaTeX
+                    try {
+                        if (window.renderMathInElement) {
+                            renderMathInElement(solutionDiv, { delimiters: [ {left: "$", right: "$", display: false} ] });
+                        }
+                    } catch(e) { console.error("Erreur KaTeX (static quiz):", e); }
+                });
+            });
+            // --- Fin de la logique des quiz statiques ---
+
 
             // Initialiser les générateurs au chargement
             generateNewRelation();
             generateNewMatrix();
+            generateNewMatrix4x4(); // Initialise le nouveau générateur
         });
     </script>
 </body>
